@@ -1,0 +1,40 @@
+[workspace]
+members = [
+    "crates/forge-core",
+    "crates/forge-ai",
+    "crates/forge-webhook",
+    "crates/forge-bridge",
+    "crates/forge-cli",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["rick walker <xuoxod@gmail.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/xuoxod/forgetunnel"
+homepage = "https://github.com/xuoxod/forgetunnel"
+description = "Sovereign Local-AI & Webhook Edge Gateway (The Open-Source Ngrok + Ollama Bridge)"
+readme = "README.md"
+keywords = ["tunnel", "reverse-proxy", "ollama", "local-ai", "webhooks"]
+categories = ["command-line-utilities", "network-programming", "development-tools"]
+
+[workspace.dependencies]
+tokio = { version = "1.38", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+sha2 = "0.10"
+hex = "0.4"
+hmac = "0.12"
+chrono = { version = "0.4", features = ["serde"] }
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+clap = { version = "4.5", features = ["derive", "cargo"] }
+colored = "2.1"
+reqwest = { version = "0.12", features = ["json", "stream"] }
+futures-util = "0.3"
+bytes = "1.6"
+tokio-tungstenite = "0.23"

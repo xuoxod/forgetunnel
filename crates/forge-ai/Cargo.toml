@@ -1,0 +1,18 @@
+[package]
+name = "forge-ai"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Ollama and OpenAI API streaming adapters, chunk parsers, and mock testing engines"
+
+[dependencies]
+forge-core = { path = "../forge-core" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+reqwest = { workspace = true }
+futures-util = { workspace = true }
+bytes = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

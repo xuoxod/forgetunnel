@@ -1,0 +1,20 @@
+[package]
+name = "forge-bridge"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Outbound TLS WebSocket reverse tunnel bridge and virtual stream multiplexer"
+
+[dependencies]
+forge-core = { path = "../forge-core" }
+forge-ai = { path = "../forge-ai" }
+forge-webhook = { path = "../forge-webhook" }
+tokio = { workspace = true }
+tokio-tungstenite = { workspace = true }
+futures-util = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+bytes = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
