@@ -1,0 +1,22 @@
+[package]
+name = "forge-ledger"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Embedded SQLite WAL persistence sink and blockchain ledger storage for ForgeTunnel"
+
+[dependencies]
+forge-core = { path = "../forge-core" }
+forge-telemetry = { path = "../forge-telemetry" }
+rusqlite = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+tokio = { workspace = true }

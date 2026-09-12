@@ -12,6 +12,9 @@ path = "src/main.rs"
 
 [dependencies]
 forge-core = { path = "../forge-core" }
+forge-telemetry = { path = "../forge-telemetry" }
+forge-ledger = { path = "../forge-ledger" }
+forge-report = { path = "../forge-report" }
 forge-ai = { path = "../forge-ai" }
 forge-webhook = { path = "../forge-webhook" }
 forge-bridge = { path = "../forge-bridge" }
@@ -23,3 +26,6 @@ tracing-subscriber = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 toml = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }

@@ -1,0 +1,21 @@
+[package]
+name = "forge-report"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Decoupled Single Source of Truth (SST) report orchestrator, multi-format renderers, and security sanitizers for ForgeTunnel"
+
+[dependencies]
+forge-core = { path = "../forge-core" }
+forge-telemetry = { path = "../forge-telemetry" }
+forge-ledger = { path = "../forge-ledger" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+tokio = { workspace = true }

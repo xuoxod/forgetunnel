@@ -26,8 +26,11 @@ pub struct GenerateRequest {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GenerateChunk {
+    #[serde(default)]
     pub model: String,
+    #[serde(default)]
     pub response: String,
+    #[serde(default)]
     pub done: bool,
     #[serde(default)]
     pub total_duration: Option<u64>,
