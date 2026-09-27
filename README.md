@@ -72,22 +72,22 @@ ForgeTunnel includes enterprise-grade utilities in the universals toolchain:
 ### Picosecond & Timestamp Converter (`sovereign-chrono.sh`)
 ```bash
 # Convert raw picoseconds to scaled human format & breakdown
-/home/emhcet/private/projects/universals/scripts/sovereign-chrono.sh ps 1450000000000
+./scripts/sovereign-chrono.sh ps 1450000000000
 
 # Convert ISO-8601 UTC timestamp to Local, UTC, Relative & Epoch
-/home/emhcet/private/projects/universals/scripts/sovereign-chrono.sh ts 2026-09-11T20:16:46Z
+./scripts/sovereign-chrono.sh ts 2026-09-11T20:16:46Z
 ```
 
 ### Multi-Criteria Log & Ledger Search (`forgetunnel-search.sh`)
 ```bash
 # Filter AI sessions from today
-/home/emhcet/private/projects/universals/scripts/forgetunnel-search.sh --date today
+./scripts/forgetunnel-search.sh --date today
 
 # Filter AI sessions taking longer than 1s in the last 2 hours
-/home/emhcet/private/projects/universals/scripts/forgetunnel-search.sh --since "2h ago" --min-dur 1s --model llama3.2
+./scripts/forgetunnel-search.sh --since "2h ago" --min-dur 1s --model llama3.2
 
 # Query webhook replay logs
-/home/emhcet/private/projects/universals/scripts/forgetunnel-search.sh --type webhook -k Stripe --format json
+./scripts/forgetunnel-search.sh --type webhook -k Stripe --format json
 ```
 
 ---
