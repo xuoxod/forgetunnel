@@ -14,6 +14,12 @@
 
 ---
 
+> [!NOTE]
+> **Sovereign Evolution Notice:**  
+> The core tunneling, local AI streaming, and webhook verification capabilities of this project have been synthesized and upgraded into **[`talos`](https://rmediatech.com)**, the sovereign enterprise outpost and zero-inbound sentinel of the [RMediaTech Sovereign Ecosystem](https://rmediatech.com). This repository is preserved as an open-source technical showcase and reference implementation.
+
+---
+
 ## 🌟 Executive Summary
 
 **ForgeTunnel** is an enterprise-grade reverse-tunnel gateway built in Rust. It enables developers to expose local AI models (such as Ollama, vLLM, and llama.cpp) and internal webhook receivers to remote consumers over secure outbound-only TLS WebSocket connections—without opening firewall ports or relying on proprietary SaaS intermediaries.
