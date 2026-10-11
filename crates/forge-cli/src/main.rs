@@ -15,7 +15,7 @@ use tracing_subscriber::EnvFilter;
 #[derive(Parser)]
 #[command(
     name = "forgetunnel",
-    author = "rick walker <xuoxod@gmail.com>",
+    author = "Rick Walker <rick@rmediatech.com>",
     version = "0.1.0",
     about = "⚡ Sovereign Local-AI & Webhook Edge Gateway (The Open-Source Ngrok + Ollama Bridge)",
     long_about = "Forgetunnel exposes local AI models (Ollama, vLLM) and dev webhooks to the world over zero-open-inbound-port Conduit tunnels with token-gating, streaming LLM proxying, and 4-tier safety gates."

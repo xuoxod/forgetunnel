@@ -14,7 +14,7 @@ resolver = "2"
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-authors = ["rick walker <xuoxod@gmail.com>"]
+authors = ["Rick Walker <rick@rmediatech.com>"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/xuoxod/forgetunnel"
 homepage = "https://github.com/xuoxod/forgetunnel"
