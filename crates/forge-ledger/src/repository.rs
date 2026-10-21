@@ -150,23 +150,13 @@ impl ForgeLedger {
 
         let rows = stmt.query_map(params![limit as i64], |row| {
             Ok(AiSessionRecord {
-                session_id: row.get(0)?,
-                model: row.get(1)?,
-                prompt_preview: row.get(2)?,
-                prompt_tokens: row.get(3)?,
-                completion_tokens: row.get(4)?,
-                ttft_ms: row.get(5)?,
-                tps: row.get(6)?,
-                duration_ms: row.get(7)?,
-                status: row.get(8)?,
-                created_at: row.get(9)?,
+                session_id: row.get(0)?, model: row.get(1)?, prompt_preview: row.get(2)?,
+                prompt_tokens: row.get(3)?, completion_tokens: row.get(4)?, ttft_ms: row.get(5)?,
+                tps: row.get(6)?, duration_ms: row.get(7)?, status: row.get(8)?, created_at: row.get(9)?,
             })
         })?;
-
         let mut results = Vec::new();
-        for r in rows {
-            results.push(r?);
-        }
+        for r in rows { results.push(r?); }
         Ok(results)
     }
 
@@ -183,23 +173,13 @@ impl ForgeLedger {
         let rows = stmt.query_map(params![limit as i64], |row| {
             let valid_int: i32 = row.get(4)?;
             Ok(WebhookRecord {
-                event_id: row.get(0)?,
-                provider: row.get(1)?,
-                event_type: row.get(2)?,
-                signature_header: row.get(3)?,
-                signature_valid: valid_int == 1,
-                payload_bytes: row.get(5)?,
-                payload_body: row.get(6)?,
-                replay_count: row.get(7)?,
-                status_code: row.get(8)?,
-                created_at: row.get(9)?,
+                event_id: row.get(0)?, provider: row.get(1)?, event_type: row.get(2)?,
+                signature_header: row.get(3)?, signature_valid: valid_int == 1, payload_bytes: row.get(5)?,
+                payload_body: row.get(6)?, replay_count: row.get(7)?, status_code: row.get(8)?, created_at: row.get(9)?,
             })
         })?;
-
         let mut results = Vec::new();
-        for r in rows {
-            results.push(r?);
-        }
+        for r in rows { results.push(r?); }
         Ok(results)
     }
 
