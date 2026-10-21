@@ -136,27 +136,12 @@ pub async fn dispatch_command(
                 format!("Total Tokens: {}", metrics.total_tokens).bright_green()
             );
         }
-
         Some(Commands::Webhook { replay, limit, db }) => {
-            let ledger =
-                ForgeLedger::open(&db).unwrap_or_else(|_| ForgeLedger::open_in_memory().unwrap());
+            let ledger = ForgeLedger::open(&db).unwrap_or_else(|_| ForgeLedger::open_in_memory().unwrap());
             if let Some(id) = replay {
                 match ledger.increment_webhook_replay(&id) {
-                    Ok(count) => {
-                        println!(
-                            "🔄 Replaying webhook payload ID '{}' (Replay #{}) to local target...",
-                            id.bright_yellow(),
-                            count
-                        );
-                        println!("✅ Replay delivered successfully (HTTP 200 OK)");
-                    }
-                    Err(_) => {
-                        println!(
-                            "🔄 Replaying webhook payload ID '{}' to local target...",
-                            id.bright_yellow()
-                        );
-                        println!("✅ Replay delivered successfully (HTTP 200 OK)");
-                    }
+                    Ok(count) => println!("🔄 Replaying webhook payload ID '{}' (Replay #{}) to local target...\n✅ Replay delivered successfully (HTTP 200 OK)", id.bright_yellow(), count),
+                    Err(_) => println!("🔄 Replaying webhook payload ID '{}' to local target...\n✅ Replay delivered successfully (HTTP 200 OK)", id.bright_yellow()),
                 }
             } else {
                 let list = ledger.query_webhooks(limit).unwrap_or_default();

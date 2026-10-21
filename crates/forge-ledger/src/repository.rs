@@ -35,51 +35,26 @@ impl ForgeLedger {
         // Initialize schema tables
         conn.execute_batch(
             "CREATE TABLE IF NOT EXISTS telemetry_blocks (
-                block_index INTEGER PRIMARY KEY,
-                block_hash TEXT NOT NULL UNIQUE,
-                prev_hash TEXT NOT NULL,
-                payload_digest TEXT NOT NULL,
-                who TEXT NOT NULL,
-                source_addr TEXT NOT NULL,
-                dest_addr TEXT NOT NULL,
-                action TEXT NOT NULL,
-                transport TEXT NOT NULL,
-                safety_tier TEXT NOT NULL,
-                prompt_tokens INTEGER NOT NULL,
-                completion_tokens INTEGER NOT NULL,
-                ttft_ms REAL NOT NULL,
-                tps REAL NOT NULL,
-                duration_ps INTEGER NOT NULL,
-                timestamp_utc TEXT NOT NULL,
-                raw_json TEXT NOT NULL
+                block_index INTEGER PRIMARY KEY, block_hash TEXT NOT NULL UNIQUE,
+                prev_hash TEXT NOT NULL, payload_digest TEXT NOT NULL,
+                who TEXT NOT NULL, source_addr TEXT NOT NULL, dest_addr TEXT NOT NULL,
+                action TEXT NOT NULL, transport TEXT NOT NULL, safety_tier TEXT NOT NULL,
+                prompt_tokens INTEGER NOT NULL, completion_tokens INTEGER NOT NULL,
+                ttft_ms REAL NOT NULL, tps REAL NOT NULL, duration_ps INTEGER NOT NULL,
+                timestamp_utc TEXT NOT NULL, raw_json TEXT NOT NULL
             );
-
             CREATE TABLE IF NOT EXISTS ai_sessions (
-                session_id TEXT PRIMARY KEY,
-                model TEXT NOT NULL,
-                prompt_preview TEXT NOT NULL,
-                prompt_tokens INTEGER NOT NULL,
-                completion_tokens INTEGER NOT NULL,
-                ttft_ms REAL NOT NULL,
-                tps REAL NOT NULL,
-                duration_ms REAL NOT NULL,
-                status TEXT NOT NULL,
-                created_at TEXT NOT NULL
+                session_id TEXT PRIMARY KEY, model TEXT NOT NULL, prompt_preview TEXT NOT NULL,
+                prompt_tokens INTEGER NOT NULL, completion_tokens INTEGER NOT NULL,
+                ttft_ms REAL NOT NULL, tps REAL NOT NULL, duration_ms REAL NOT NULL,
+                status TEXT NOT NULL, created_at TEXT NOT NULL
             );
-
             CREATE TABLE IF NOT EXISTS webhook_events (
-                event_id TEXT PRIMARY KEY,
-                provider TEXT NOT NULL,
-                event_type TEXT NOT NULL,
-                signature_header TEXT NOT NULL,
-                signature_valid INTEGER NOT NULL,
-                payload_bytes INTEGER NOT NULL,
-                payload_body TEXT NOT NULL,
-                replay_count INTEGER NOT NULL DEFAULT 0,
-                status_code INTEGER NOT NULL,
-                created_at TEXT NOT NULL
+                event_id TEXT PRIMARY KEY, provider TEXT NOT NULL, event_type TEXT NOT NULL,
+                signature_header TEXT NOT NULL, signature_valid INTEGER NOT NULL,
+                payload_bytes INTEGER NOT NULL, payload_body TEXT NOT NULL,
+                replay_count INTEGER NOT NULL DEFAULT 0, status_code INTEGER NOT NULL, created_at TEXT NOT NULL
             );
-
             CREATE INDEX IF NOT EXISTS idx_blocks_timestamp ON telemetry_blocks(timestamp_utc);
             CREATE INDEX IF NOT EXISTS idx_ai_created ON ai_sessions(created_at);
             CREATE INDEX IF NOT EXISTS idx_webhook_created ON webhook_events(created_at);"
@@ -103,59 +78,36 @@ impl ForgeLedger {
                 timestamp_utc, raw_json
             ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17)",
             params![
-                block.index,
-                block.block_hash,
-                block.prev_hash,
-                block.payload_digest,
-                block.entry.who,
-                block.entry.from,
-                block.entry.to,
-                block.entry.what,
-                block.entry.how,
-                block.entry.minutiae.safety_tier,
-                block.entry.minutiae.prompt_tokens,
-                block.entry.minutiae.completion_tokens,
-                block.entry.minutiae.ttft_ms,
-                block.entry.minutiae.tps,
-                block.entry.minutiae.duration_ps,
-                block.timestamp_utc,
-                raw_json,
+                block.index, block.block_hash, block.prev_hash, block.payload_digest,
+                block.entry.who, block.entry.from, block.entry.to, block.entry.what,
+                block.entry.how, block.entry.minutiae.safety_tier, block.entry.minutiae.prompt_tokens,
+                block.entry.minutiae.completion_tokens, block.entry.minutiae.ttft_ms,
+                block.entry.minutiae.tps, block.entry.minutiae.duration_ps, block.timestamp_utc, raw_json,
             ],
         )?;
-
         Ok(())
     }
 
     /// Record an AI session metrics entry
     pub fn record_ai_session(&self, record: &AiSessionRecord) -> Result<(), LedgerError> {
         let conn = self.conn.lock().map_err(|e| LedgerError::Lock(e.to_string()))?;
-
         conn.execute(
             "INSERT OR REPLACE INTO ai_sessions (
                 session_id, model, prompt_preview, prompt_tokens,
                 completion_tokens, ttft_ms, tps, duration_ms, status, created_at
             ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
             params![
-                record.session_id,
-                record.model,
-                record.prompt_preview,
-                record.prompt_tokens,
-                record.completion_tokens,
-                record.ttft_ms,
-                record.tps,
-                record.duration_ms,
-                record.status,
-                record.created_at,
+                record.session_id, record.model, record.prompt_preview, record.prompt_tokens,
+                record.completion_tokens, record.ttft_ms, record.tps, record.duration_ms,
+                record.status, record.created_at,
             ],
         )?;
-
         Ok(())
     }
 
     /// Record a webhook interception event
     pub fn record_webhook(&self, record: &WebhookRecord) -> Result<(), LedgerError> {
         let conn = self.conn.lock().map_err(|e| LedgerError::Lock(e.to_string()))?;
-
         conn.execute(
             "INSERT OR REPLACE INTO webhook_events (
                 event_id, provider, event_type, signature_header,
@@ -163,19 +115,11 @@ impl ForgeLedger {
                 status_code, created_at
             ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)",
             params![
-                record.event_id,
-                record.provider,
-                record.event_type,
-                record.signature_header,
-                if record.signature_valid { 1 } else { 0 },
-                record.payload_bytes,
-                record.payload_body,
-                record.replay_count,
-                record.status_code,
-                record.created_at,
+                record.event_id, record.provider, record.event_type, record.signature_header,
+                if record.signature_valid { 1 } else { 0 }, record.payload_bytes, record.payload_body,
+                record.replay_count, record.status_code, record.created_at,
             ],
         )?;
-
         Ok(())
     }
 
@@ -272,23 +216,12 @@ impl ForgeLedger {
 
         let rows = stmt.query_map(params![limit as i64], |row| {
             Ok(BlockRecord {
-                index: row.get(0)?,
-                block_hash: row.get(1)?,
-                prev_hash: row.get(2)?,
-                payload_digest: row.get(3)?,
-                who: row.get(4)?,
-                source_addr: row.get(5)?,
-                dest_addr: row.get(6)?,
-                action: row.get(7)?,
-                transport: row.get(8)?,
-                safety_tier: row.get(9)?,
-                prompt_tokens: row.get(10)?,
-                completion_tokens: row.get(11)?,
-                ttft_ms: row.get(12)?,
-                tps: row.get(13)?,
-                duration_ps: row.get(14)?,
-                timestamp_utc: row.get(15)?,
-                raw_json: row.get(16)?,
+                index: row.get(0)?, block_hash: row.get(1)?, prev_hash: row.get(2)?,
+                payload_digest: row.get(3)?, who: row.get(4)?, source_addr: row.get(5)?,
+                dest_addr: row.get(6)?, action: row.get(7)?, transport: row.get(8)?,
+                safety_tier: row.get(9)?, prompt_tokens: row.get(10)?, completion_tokens: row.get(11)?,
+                ttft_ms: row.get(12)?, tps: row.get(13)?, duration_ps: row.get(14)?,
+                timestamp_utc: row.get(15)?, raw_json: row.get(16)?,
             })
         })?;
 

@@ -1,6 +1,7 @@
 pub mod ascii;
 pub mod csv;
 pub mod html;
+pub mod html_assets;
 pub mod json;
 pub mod markdown;
 
